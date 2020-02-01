@@ -2,7 +2,7 @@ mapboxgl.accessToken =
   'pk.eyJ1IjoidHphZ29yIiwiYSI6ImNrNjNnYTZodzA2azMzaXVhbHgwZmVnb2sifQ.QFeTFSJwKEBI-wtFQEQqtQ'
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11'
+  style: 'mapbox://styles/mapbox/streets-v9'
 })
 
 var size = 100
@@ -35,13 +35,13 @@ var pulsingDot = {
     context.clearRect(0, 0, this.width, this.height)
     context.beginPath()
     context.arc(this.width / 2, this.height / 2, outerRadius, 0, Math.PI * 2)
-    context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')'
+    context.fillStyle = 'rgba(0, 204, 255,' + (1 - t) + ')'
     context.fill()
 
     // draw inner circle
     context.beginPath()
     context.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2)
-    context.fillStyle = 'rgba(255, 100, 100, 1)'
+    context.fillStyle = 'rgba(0, 102, 128, 1)'
     context.strokeStyle = 'white'
     context.lineWidth = 2 + 4 * (1 - t)
     context.fill()
@@ -58,8 +58,21 @@ var pulsingDot = {
   }
 }
 
-function drawDot(latitude, longitude) {
-  map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 })
+let COORDS = []
+
+navigator.geolocation.getCurrentPosition(function(location) {
+  console.log(location.coords.latitude)
+  console.log(location.coords.longitude)
+  console.log(location.coords.accuracy)
+  COORDS[0] = location.coords.longitude
+  COORDS[1] = location.coords.latitude
+  // setCoordinates(location.coords.latitude, location.coords.longitude)
+})
+
+map.on('load', function() {
+  map.addImage('pulsing-dot', pulsingDot, {
+    pixelRatio: 2
+  })
 
   map.addSource('points', {
     type: 'geojson',
@@ -70,7 +83,7 @@ function drawDot(latitude, longitude) {
           type: 'Feature',
           geometry: {
             type: 'Point',
-            coordinates: [latitude, longitude]
+            coordinates: COORDS
           }
         }
       ]
@@ -84,6 +97,6 @@ function drawDot(latitude, longitude) {
       'icon-image': 'pulsing-dot'
     }
   })
-}
+})
 
-map.on('load', drawDot(0, 0))
+// map.on('load', drawDot(0, 0))
