@@ -1,7 +1,6 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
-import ZMap from './ZMap'
+import React from "react"
+import ZMap from "./ZMap"
+import "./App.css"
 
 // function App() {
 //   navigator.geolocation.getCurrentPosition(function(location) {

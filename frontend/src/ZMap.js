@@ -1,30 +1,63 @@
-import React from 'react'
-import L from 'leaflet'
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
-import Posizioni from './location/locations.json'
+import React from "react"
+import { Map, TileLayer, Marker, Popup } from "react-leaflet"
+import Posizioni from "./location/locations.json"
 
 class ZMap extends React.Component {
   constructor() {
     super()
     this.state = {
-      markers: [[35.6892, 51.389]]
+      markers: []
     }
   }
 
   addMarker = e => {
-    console.log('maker added')
-
+    //element, e.latlng
+    //JSON.stringify(obj1) === JSON.stringify(obj2)
     const { markers } = this.state
-    //markers.pop()
     markers.push(e.latlng)
     this.setState({ markers })
   }
 
+  fetchJsonCoords = () => {
+    const { markers } = this.state
+    //console.log(markers)
+
+    Object.values(Posizioni).forEach(element => {
+      let doAdd = true // si spiega da solo direi
+      let spot = { latlng: { lat: element.latitude, lng: element.longitude } }
+
+      markers.forEach(element => {
+        if (
+          doAdd == true &&
+          JSON.stringify(element) === JSON.stringify(spot.latlng)
+        ) {
+          //  se vedo che lo spot che si vuole inserire
+          //  è già presente, allora non lo inserisco
+          doAdd = false
+          //  Sto lerciume potrebbe diventare difficle quando
+          //  si hanno migliaia di markers :(
+          //  Buona fortuna ai posteri
+        }
+      })
+
+      if (markers.length < 1) {
+        console.log("cazzo, è vuoto " + markers.length)
+        doAdd = true
+      }
+
+      if (doAdd) {
+        this.addMarker(spot)
+        // la condizione è semplicemente doAdd, vera di default, che
+        // si macchia appena qualcosa non quadra
+      }
+    })
+  }
+
   render() {
     return (
-      <Map center={[45.5388, 10.2202]} zoom={12} onClick={this.addMarker}>
+      <Map center={[45.5388, 10.2202]} zoom={5} onClick={this.fetchJsonCoords}>
         <TileLayer
-          url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="http://www.bevia.ml">D35P4C1T0</a>'
           minZoom={2}
           maxZoom={17}

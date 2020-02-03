@@ -1,26 +1,32 @@
 {
   "0": {
-    "latitude": "-57.44906",
-    "longitude": "-175.87851"
+    "latitude": "55.751667",
+    "longitude": "37.617778",
+    "info": "cremlino"
   },
   "1": {
-    "latitude": "-31.44906",
-    "longitude": "-163.87851"
+    "latitude": "41.887431",
+    "longitude": "12.4886930452",
+    "info": "colosseo"
   },
   "2": {
-    "latitude": "24.44906",
-    "longitude": "-34.87851"
+    "latitude": "48.8583",
+    "longitude": "2.2945",
+    "info": "torre eiffel"
   },
   "3": {
-    "latitude": "29.44906",
-    "longitude": "-163.87851"
+    "latitude": "41.403706",
+    "longitude": "2.173504",
+    "info": "sagrada familia"
   },
   "4": {
-    "latitude": "-17.44906",
-    "longitude": "-112.87851"
+    "latitude": "33.44906",
+    "longitude": "-112.87851",
+    "info": "groove street"
   },
   "5": {
-    "latitude": "46.209722",
-    "longitude": "11.097778"
+    "latitude": "45.5855092",
+    "longitude": "10.1532057",
+    "info": "ottimo kebabbaro di gussago"
   }
 }
