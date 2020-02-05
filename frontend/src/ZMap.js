@@ -1,7 +1,7 @@
-import React from 'react'
-import Posizioni from './location/locations.json'
-import { Map, TileLayer, Marker, Popup, withLeaflet } from 'react-leaflet'
-import { ReactLeafletSearch as RLSearch } from 'react-leaflet-search'
+import React, { useState } from "react"
+import Posizioni from "./location/locations.json"
+import { Map, TileLayer, Marker, Popup, withLeaflet } from "react-leaflet"
+import { ReactLeafletSearch as RLSearch } from "react-leaflet-search"
 
 class ZMap extends React.Component {
   constructor() {
@@ -70,26 +70,26 @@ class ZMap extends React.Component {
     return (
       <Map center={[45.5388, 10.2202]} zoom={5} onClick={this.fetchJsonCoords}>
         <TileLayer
-          url='https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey={apikey}'
+          url="https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey={apikey}"
           attribution='&copy; <a href="http://www.bevia.ml">D35P4C1T0</a>'
           minZoom={2}
           maxZoom={17}
-          ext='png'
-          apikey='db5ae1f5778a448ca662554581f283c5' // thunderforest apikey ;D
+          ext="png"
+          apikey="db5ae1f5778a448ca662554581f283c5" // thunderforest apikey ;D
         />
 
         <WrappedSearch
-          position='topleft'
+          position="topleft"
           zoom={10}
           search={[56, 45.656]}
           showMarker={true}
           showPopup={true}
-          inputPlaceholder={'Search Latitude, Longitude'}
+          inputPlaceholder={"Search Location or Latitude, Longitude"}
           closeResultsOnClick={true}
-          provider='BingMap'
+          provider="BingMap"
           providerOptions={{
             providerKey:
-              'ApXYMoHp_PTC0InMDn39AI9v9igNMtjApkoRS3X5et8uyi6TsW_Bm_WD-OEgVNaa'
+              "ApXYMoHp_PTC0InMDn39AI9v9igNMtjApkoRS3X5et8uyi6TsW_Bm_WD-OEgVNaa"
           }}
           // popUp={this.customPopup}
         />

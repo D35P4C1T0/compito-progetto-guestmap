@@ -1,6 +1,9 @@
-import React from 'react'
-import ZMap from './ZMap'
-import './App.css'
+import React, { useState } from "react"
+import ZMap from "./ZMap"
+import "semantic-ui-less/semantic.less"
+import Comments from "./CommentBox"
+
+import "./App.css"
 
 // function App() {
 //   navigator.geolocation.getCurrentPosition(function(location) {
@@ -36,7 +39,12 @@ import './App.css'
 // }
 
 function App() {
-  return <ZMap />
+  return (
+    <div>
+      <ZMap></ZMap>
+      {/* <Comments></Comments> */}
+    </div>
+  )
 }
 
 export default App
