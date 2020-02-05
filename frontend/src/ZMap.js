@@ -1,7 +1,7 @@
 import React from 'react'
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import Posizioni from './location/locations.json'
-import ReactLeafletSearch from 'react-leaflet-search'
+import { Map, TileLayer, Marker, Popup, withLeaflet } from 'react-leaflet'
+import { ReactLeafletSearch as RLSearch } from 'react-leaflet-search'
 
 class ZMap extends React.Component {
   constructor() {
@@ -65,6 +65,8 @@ class ZMap extends React.Component {
   }
 
   render() {
+    const WrappedSearch = withLeaflet(RLSearch)
+
     return (
       <Map center={[45.5388, 10.2202]} zoom={5} onClick={this.fetchJsonCoords}>
         <TileLayer
@@ -75,7 +77,23 @@ class ZMap extends React.Component {
           ext='png'
           apikey='db5ae1f5778a448ca662554581f283c5' // thunderforest apikey ;D
         />
-        <ReactLeafletSearch position='topright' />;
+
+        <WrappedSearch
+          position='topleft'
+          zoom={10}
+          search={[56, 45.656]}
+          showMarker={true}
+          showPopup={true}
+          inputPlaceholder={'Search Latitude, Longitude'}
+          closeResultsOnClick={true}
+          provider='BingMap'
+          providerOptions={{
+            providerKey:
+              'ApXYMoHp_PTC0InMDn39AI9v9igNMtjApkoRS3X5et8uyi6TsW_Bm_WD-OEgVNaa'
+          }}
+          // popUp={this.customPopup}
+        />
+
         {this.state.markers.map((position, idx) => (
           <Marker key={`marker-${idx}`} position={position}>
             <Popup>{this.state.infos[idx]}</Popup>
