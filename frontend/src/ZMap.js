@@ -1,12 +1,13 @@
-import React from "react"
-import { Map, TileLayer, Marker, Popup } from "react-leaflet"
-import Posizioni from "./location/locations.json"
+import React from 'react'
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
+import Posizioni from './location/locations.json'
 
 class ZMap extends React.Component {
   constructor() {
     super()
     this.state = {
-      markers: []
+      markers: [],
+      infos: []
     }
   }
 
@@ -16,6 +17,10 @@ class ZMap extends React.Component {
     const { markers } = this.state
     markers.push(e.latlng)
     this.setState({ markers })
+
+    const { infos } = this.state
+    infos.push(e.info)
+    this.setState({ infos })
   }
 
   fetchJsonCoords = () => {
@@ -24,11 +29,16 @@ class ZMap extends React.Component {
 
     Object.values(Posizioni).forEach(element => {
       let doAdd = true // si spiega da solo direi
-      let spot = { latlng: { lat: element.latitude, lng: element.longitude } }
+      let spot = {
+        latlng: { lat: element.latitude, lng: element.longitude },
+        info: element.info
+      }
+
+      //console.log(element.info)
 
       markers.forEach(element => {
         if (
-          doAdd == true &&
+          doAdd === true &&
           JSON.stringify(element) === JSON.stringify(spot.latlng)
         ) {
           //  se vedo che lo spot che si vuole inserire
@@ -41,7 +51,7 @@ class ZMap extends React.Component {
       })
 
       if (markers.length < 1) {
-        console.log("cazzo, è vuoto " + markers.length)
+        //console.log('cazzo, è vuoto ' + markers.length)
         doAdd = true
       }
 
@@ -57,13 +67,15 @@ class ZMap extends React.Component {
     return (
       <Map center={[45.5388, 10.2202]} zoom={5} onClick={this.fetchJsonCoords}>
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
           attribution='&copy; <a href="http://www.bevia.ml">D35P4C1T0</a>'
           minZoom={2}
           maxZoom={17}
         />
         {this.state.markers.map((position, idx) => (
-          <Marker key={`marker-${idx}`} position={position}></Marker>
+          <Marker key={`marker-${idx}`} position={position}>
+            <Popup>{this.state.infos[idx]}</Popup>
+          </Marker>
         ))}
       </Map>
     )
