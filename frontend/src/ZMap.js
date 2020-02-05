@@ -1,6 +1,7 @@
 import React from 'react'
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import Posizioni from './location/locations.json'
+import ReactLeafletSearch from 'react-leaflet-search'
 
 class ZMap extends React.Component {
   constructor() {
@@ -67,11 +68,14 @@ class ZMap extends React.Component {
     return (
       <Map center={[45.5388, 10.2202]} zoom={5} onClick={this.fetchJsonCoords}>
         <TileLayer
-          url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+          url='https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey={apikey}'
           attribution='&copy; <a href="http://www.bevia.ml">D35P4C1T0</a>'
           minZoom={2}
           maxZoom={17}
+          ext='png'
+          apikey='db5ae1f5778a448ca662554581f283c5' // thunderforest apikey ;D
         />
+        <ReactLeafletSearch position='topright' />;
         {this.state.markers.map((position, idx) => (
           <Marker key={`marker-${idx}`} position={position}>
             <Popup>{this.state.infos[idx]}</Popup>

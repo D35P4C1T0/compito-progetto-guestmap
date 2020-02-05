@@ -1,6 +1,6 @@
-import React from "react"
-import ZMap from "./ZMap"
-import "./App.css"
+import React from 'react'
+import ZMap from './ZMap'
+import './App.css'
 
 // function App() {
 //   navigator.geolocation.getCurrentPosition(function(location) {
