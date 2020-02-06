@@ -27,7 +27,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author pollini
+ * @author Dell'Oro
  */
 @WebServlet(name = "MessageServlet", urlPatterns = {"/messages"})
 public class MessageServlet extends HttpServlet {
@@ -40,10 +40,12 @@ public class MessageServlet extends HttpServlet {
         try {
             messageDAO = MessageDAO.getInstance();
             messageDAO.add(new Message("ciao", 23, 34.45f));
-            
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MessageServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(MessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     
     
@@ -63,20 +65,20 @@ public class MessageServlet extends HttpServlet {
         try {
             List<Message> allMessages = messageDAO.getAll();
             JSONObject out = new JSONObject();
-            
+            System.out.println(allMessages);
             JSONArray messagesJSON = new JSONArray();
             //loop sui messaggi
-            for( Message m : allMessages) {
+            for( Message msg : allMessages) {
                 JSONObject messageJSON = new JSONObject();
-                messageJSON.put("content", m.getContent());
+                messageJSON.put("content", msg.getContent());
+                messageJSON.put("longitude", msg.getLon());
+                messageJSON.put("latitude", msg.getLat());
                 messagesJSON.add(messageJSON);
             }
             out.put("messages", ObjectToJSON.of(allMessages));
-             
-            
             PrintWriter writer = response.getWriter();
             //writer.write(out.toJSONString());
-            writer.write(ObjectToJSON.of(allMessages).toJSONString());
+            writer.write(messagesJSON.toJSONString());
             writer.flush();
             writer.close();
         } catch (IllegalArgumentException ex) {
@@ -96,12 +98,12 @@ public class MessageServlet extends HttpServlet {
             "lon": 12.234
             }
             */
-            // recupero il bory della richiesta dal reader req.getReader()
+            // recupero il body della richiesta dal reader req.getReader()
             String body = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-            System.out.println("POST! ->" + body);
+            //System.out.println("POST! ->" + body);
             JSONParser parser = new JSONParser();
             JSONObject parsedJSON = (JSONObject)parser.parse(body);
-            System.out.println("content: " + parsedJSON.get("content"));
+            //System.out.println("content: " + parsedJSON.get("content"));
             Message msg = new Message((String)parsedJSON.get("content"), 
                    Double.parseDouble(parsedJSON.get("lat").toString()), (double)parsedJSON.get("lon"));
             messageDAO.add(msg);
@@ -109,6 +111,29 @@ public class MessageServlet extends HttpServlet {
             Logger.getLogger(MessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp); //To change body of generated methods, choose Tools | Templates.
+        /* Riceve JSON del tipo 
+        {
+            "content":"....",
+            "lat":12.22,
+            "lon":13.23
+        }
+        */
+        
+    }
+    
+    
+    
+    
 
     
     /**

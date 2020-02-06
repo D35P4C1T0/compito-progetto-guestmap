@@ -5,9 +5,11 @@
  */
 package com.ap.guestmap.model;
 
+import com.ap.guestmap.utils.JsonSerializable;
+
 /**
  *
- * @author pollini
+ * @author Dell'Oro
  */
 
 public class Message {
