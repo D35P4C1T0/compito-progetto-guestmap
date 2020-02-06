@@ -1,16 +1,16 @@
-import _ from "lodash"
-import React, { Component } from "react"
-import { Button, Image, List, Transition } from "semantic-ui-react"
-import avatar from "./media/user.svg"
+import _ from 'lodash'
+import React, { Component } from 'react'
+import { Button, Image, List, Transition } from 'semantic-ui-react'
+import avatar from './media/user.svg'
 
 const comments = [
-  "Alfonso",
-  "Pleisolder",
-  "Carlos",
-  "Girardi",
-  "Boccaccio",
-  "Belen",
-  "Diletta"
+  'Alfonso',
+  'Pleisolder',
+  'Carlos',
+  'Girardi',
+  'Boccaccio',
+  'Belen',
+  'Diletta'
 ] // qui fetchi i commenti
 
 //  direi che i commenti possono essere oggetti tipo così:
@@ -37,12 +37,12 @@ export default class Comments extends Component {
         <Button.Group>
           <Button
             disabled={items.length === 0}
-            icon="minus"
+            icon='minus'
             onClick={this.handleRemove}
           />
           <Button
             disabled={items.length === comments.length}
-            icon="plus"
+            icon='plus'
             onClick={this.handleAdd}
           />
         </Button.Group>
@@ -51,13 +51,16 @@ export default class Comments extends Component {
           as={List}
           duration={200}
           divided
-          size="huge"
-          verticalAlign="middle"
+          size='huge'
+          verticalAlign='middle'
         >
           {items.map(item => (
             <List.Item key={item}>
               <Image avatar src={avatar} />
-              <List.Content header={_.startCase(item)} content="el topo que gira" />
+              <List.Content
+                header={_.startCase(item)}
+                content='el topo que gira'
+              />
             </List.Item>
           ))}
         </Transition.Group>

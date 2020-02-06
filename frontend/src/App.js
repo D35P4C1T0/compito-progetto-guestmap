@@ -1,50 +1,100 @@
-import React, { useState } from "react"
-import ZMap from "./ZMap"
-import "semantic-ui-less/semantic.less"
-import Comments from "./CommentBox"
+import ZMap from './ZMap'
+import CommentBox from './CommentBox'
+import DummyComments from './DummyComments'
+import Input from './SemanticInput'
+import 'semantic-ui-less/semantic.less'
+import './App.css'
 
-import "./App.css"
+import React, { Component } from 'react'
+// import Button from '@bit/semantic-org.semantic-ui-react.button'
+// import Header from '@bit/semantic-org.semantic-ui-react.header'
+// import Icon from '@bit/semantic-org.semantic-ui-react.icon'
+// import Image from '@bit/semantic-org.semantic-ui-react.image'
+// import Menu from '@bit/semantic-org.semantic-ui-react.menu'
+// import Segment from '@bit/semantic-org.semantic-ui-react.segment'
+// import Sidebar from '@bit/semantic-org.semantic-ui-react.sidebar'
+
+import {
+  Button,
+  Header,
+  Icon,
+  Image,
+  Menu,
+  Segment,
+  Sidebar
+} from 'semantic-ui-react'
+
+const style = (
+  <link
+    rel='stylesheet'
+    href='https://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css'
+  />
+)
+
+class CustomSidebar extends Component {
+  state = { visible: false }
+
+  handleHideClick = () => this.setState({ visible: false })
+  handleShowClick = () => this.setState({ visible: true })
+  handleSidebarHide = () => this.setState({ visible: false })
+
+  render() {
+    const { visible } = this.state
+
+    return (
+      <div>
+        {/* <Button.Group>
+          <Button disabled={visible} onClick={this.handleShowClick}>
+            Show sidebars
+          </Button>
+          <Button disabled={!visible} onClick={this.handleHideClick}>
+            Hide sidebars
+          </Button>
+        </Button.Group> */}
+
+        <Sidebar.Pushable as={Segment}>
+          <Sidebar
+            as={Menu}
+            animation='slide out'
+            direction='right'
+            icon='labeled'
+            // inverted
+            onHide={this.handleSidebarHide}
+            vertical
+            visible={visible}
+            width='wide'
+          >
+            <Menu.Item as='a'>
+              <Input />
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <DummyComments />
+            </Menu.Item>
+          </Sidebar>
+
+          <Sidebar.Pusher onClick={this.handleShowClick}>
+            <ZMap />
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </div>
+    )
+  }
+}
+
+export default () => (
+  <div>
+    {style}
+    <CustomSidebar />
+  </div>
+)
 
 // function App() {
-//   navigator.geolocation.getCurrentPosition(function(location) {
-//     console.log(location.coords.latitude)
-//     console.log(location.coords.longitude)
-//     console.log(location.coords.accuracy)
-//   })
-
-//   //console.log(Posizioni)
-//   let CoordsArray = new Array(Posizioni)
-//   //console.log(CoordsArray)
-
-//   CoordsArray.forEach(elements => {
-//     console.log(elements)
-//   })
-
 //   return (
-//     <Map center={[45.5388, 10.2202]} zoom={12}>
-//       <TileLayer
-//         url='https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
-//         attribution='&copy; <a href="http://www.bevia.ml">D35P4C1T0</a>'
-//         minZoom={2}
-//         maxZoom={17}
-//       />
-//       {/* <Marker position={[45.5388, 10.2202]}>
-//         <Popup>{frase}</Popup>
-//       </Marker> */}
-//       {this.state.markers.map((position, idx) => (
-//         <Marker key={`marker-${idx}`} position={position}></Marker>
-//       ))}
-//     </Map>
+//     <div>
+//       <ZMap />
+//       <Sidebar />
+//     </div>
 //   )
 // }
 
-function App() {
-  return (
-    <div>
-      <ZMap></ZMap>
-      {/* <Comments></Comments> */}
-    </div>
-  )
-}
-
-export default App
+// export default App
