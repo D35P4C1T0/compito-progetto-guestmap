@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author pollini
+ * @author Dell'Oro
  * 
- * DAO = Data Access Object 
+ * DAO = DAta Access Object 
  * 
  * Pattern architetturale che descrive la modalità
  * di accesso ai dati salvati "da qualche parte".
@@ -51,18 +51,31 @@ public class MessageDAO {
     private MessageDAO() throws ClassNotFoundException, SQLException {
         Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
         
-        conn = DriverManager.getConnection("jdbc:derby://localhost:1527/guestmap","test","test");
-        // connessione al db di netbeans
+        conn =DriverManager.getConnection("jdbc:derby://localhost:1527/GuestMap","test","test");
         
         messages = new ArrayList<>();
     }
     
+    public int getMessageId(Message msg){
+        try {
+            PreparedStatement stmt = conn.prepareStatement("SELECT ID FROM MESSAGE WHERE content =(?) AND lon =(?) AND lat=(?)");
+            stmt.setString(1, msg.getContent());
+            stmt.setDouble(2, msg.getLon());
+            stmt.setDouble(3, msg.getLat());
+            ResultSet rs = stmt.executeQuery();
+            return rs.getInt("ID");
+        } catch (SQLException ex) {
+            Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
     public void add(Message msg) {
         try {
-            //messages.add(msg);
-            PreparedStatement st = conn.prepareStatement("INSERT INTO TEST.MESSAGES VALUES(?)");
-            // qua dovresti cambiare la roba di test con qualcosa di finale
-            st.setString(1, msg.getContent());
+            PreparedStatement st = conn.prepareStatement("INSERT INTO TEST.MESSAGE VALUES(?, ?, ?)");
+            st.setString(3, msg.getContent());
+            st.setDouble(1, msg.getLon());
+            st.setDouble(2, msg.getLat());
             st.execute();
         } catch (SQLException ex) {
             Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,24 +88,20 @@ public class MessageDAO {
         List<Message> messages = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM MESSAGES");
-            // lancia la query SQL
-           
+            ResultSet rs = stmt.executeQuery("SELECT * FROM MESSAGE");
             while(rs.next()) {
-                // da cambiare
-                System.out.println(">>> " + rs.getString("message"));
-                
-                
-                messages.add(new Message(rs.getString("message"),0,0));
-                // la funzione sopra non fa altro che prendere tutti i messaggi e aggiungerli
-                // alla lista messages. Sopra si nota che crea un messaggio nuovo ogni
-                // volta per motivi di debug, perchè in origine non aveva messaggi.
+                //System.out.println(">>> " + rs.getString("content"));
+                messages.add(new Message(rs.getString("CONTENT"),rs.getDouble("LONGITUDE"),rs.getDouble("LATITUDE")));
             }
-            rs.close(); //chiude la connessione
+            rs.close();
             
         } catch (SQLException ex) {
             Logger.getLogger(MessageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return messages;
+    }
+    
+    public void delete(Message msg){
+        
     }
 }
