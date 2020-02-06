@@ -12,6 +12,14 @@ class ZMap extends React.Component {
     }
   }
 
+  serverFetch = url => {
+    fetch(url)
+      .then(resp => resp.json()) // Transform the data into json
+      .then(function(data) {
+        // Create and append the li's to the ul
+      })
+  }
+
   addMarker = e => {
     //element, e.latlng
     //JSON.stringify(obj1) === JSON.stringify(obj2)
