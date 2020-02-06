@@ -54,10 +54,7 @@ const DummyComments = () => (
         <Comment.Metadata>
           <div>5 days ago</div>
         </Comment.Metadata>
-        <Comment.Text>
-          Sto lerciume potrebbe diventare difficile quando si hanno migliaia di
-          markers :( Buona fortuna ai posteri
-        </Comment.Text>
+        <Comment.Text>Camerieri simpatici e ottima varietá</Comment.Text>
         <Comment.Actions>
           <Comment.Action>Reply</Comment.Action>
         </Comment.Actions>

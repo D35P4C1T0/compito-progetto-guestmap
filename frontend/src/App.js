@@ -65,10 +65,14 @@ class CustomSidebar extends Component {
             visible={visible}
             width='wide'
           >
+            <Menu.Item as='a'>
+              <Input />
+            </Menu.Item>
+
             <Menu.Item>
               <div>
                 <Label as='a' color='white' image>
-                  📍 Luogo Scelto
+                  <span>📍</span> Luogo Scelto
                   {/* 📍 Luogo Scelto */}
                   <Label.Detail>Paese</Label.Detail>
                 </Label>
@@ -77,10 +81,6 @@ class CustomSidebar extends Component {
 
             <Menu.Item as='a'>
               <DummyComments />
-            </Menu.Item>
-
-            <Menu.Item as='a'>
-              <Input />
             </Menu.Item>
           </Sidebar>
 
