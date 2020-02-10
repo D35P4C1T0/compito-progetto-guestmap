@@ -12,14 +12,6 @@ class ZMap extends React.Component {
     }
   }
 
-  serverFetch = url => {
-    fetch(url)
-      .then(resp => resp.json()) // Transform the data into json
-      .then(function(data) {
-        // Create and append the li's to the ul
-      })
-  }
-
   addMarker = e => {
     //element, e.latlng
     //JSON.stringify(obj1) === JSON.stringify(obj2)
@@ -32,7 +24,22 @@ class ZMap extends React.Component {
     this.setState({ infos })
   }
 
-  fetchJsonCoords = () => {
+  fetchJsonCoords(url) {
+    // create a new XMLHttpRequest
+    var xhr = new XMLHttpRequest()
+
+    // get a callback when the server responds
+    xhr.addEventListener('load', () => {
+      // update the state of the component with the result here
+      console.log(xhr.responseText)
+      // QUI ci va tutto il codice per scorrere il JSON con i commenti
+      // Mannaggia alle callback
+    })
+    // open the request with the verb and the url
+    xhr.open('GET', url)
+    // send the request
+    xhr.send()
+
     const { markers } = this.state
     //console.log(markers)
 
@@ -60,23 +67,28 @@ class ZMap extends React.Component {
       })
 
       if (markers.length < 1) {
-        //console.log('cazzo, è vuoto ' + markers.length)
+        //console.log('Oibò, è vuoto ' + markers.length)
         doAdd = true
       }
 
       if (doAdd) {
         this.addMarker(spot)
-        // la condizione è semplicemente doAdd, vera di default, che
-        // si macchia appena qualcosa non quadra
+        // la condizione è semplicemente doAdd, vera di default,
+        // che si macchia appena qualcosa non quadra
       }
     })
   }
 
   render() {
     const WrappedSearch = withLeaflet(RLSearch)
+    let url = 'http://localhost:8080/guestmap/messages'
 
     return (
-      <Map center={[45.5388, 10.2202]} zoom={5} onClick={this.fetchJsonCoords}>
+      <Map
+        center={[45.5388, 10.2202]}
+        zoom={5}
+        onClick={this.fetchJsonCoords(url)}
+      >
         <TileLayer
           url='https://{s}.tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey={apikey}'
           attribution='&copy; <a href="http://www.bevia.ml">D35P4C1T0</a>'

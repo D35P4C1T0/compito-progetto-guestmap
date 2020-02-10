@@ -63,6 +63,7 @@ const DummyComments = () => (
 
     <Form reply>
       <Form.TextArea />
+
       <Button
         className='submitCommentButton'
         content='Add Reply'

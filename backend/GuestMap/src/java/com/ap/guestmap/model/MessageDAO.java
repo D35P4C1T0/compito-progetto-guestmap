@@ -51,7 +51,7 @@ public class MessageDAO {
     private MessageDAO() throws ClassNotFoundException, SQLException {
         Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
         
-        conn =DriverManager.getConnection("jdbc:derby://localhost:1527/GuestMap","test","test");
+        conn =DriverManager.getConnection("jdbc:derby://localhost:1527/GuestMap","app","app");
         
         messages = new ArrayList<>();
     }

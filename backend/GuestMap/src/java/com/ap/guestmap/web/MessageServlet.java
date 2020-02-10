@@ -39,7 +39,7 @@ public class MessageServlet extends HttpServlet {
         super.init(); //To change body of generated methods, choose Tools | Templates.
         try {
             messageDAO = MessageDAO.getInstance();
-            messageDAO.add(new Message("ciao", 23, 34.45f));
+            messageDAO.add(new Message("ciao", 23, 34.45));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MessageServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
