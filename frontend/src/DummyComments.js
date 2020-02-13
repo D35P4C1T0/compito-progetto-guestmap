@@ -13,7 +13,7 @@ const DummyComments = () => (
         </Comment.Metadata>
         <Comment.Text>N'è male come posto eh!</Comment.Text>
         <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
+          <Comment.Action>Segnala</Comment.Action>
         </Comment.Actions>
       </Comment.Content>
     </Comment>
@@ -29,7 +29,7 @@ const DummyComments = () => (
           <p>Ottimo kebab, tornerei volentieri</p>
         </Comment.Text>
         <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
+          <Comment.Action>Segnala</Comment.Action>
         </Comment.Actions>
       </Comment.Content>
       <Comment>
@@ -41,7 +41,7 @@ const DummyComments = () => (
           </Comment.Metadata>
           <Comment.Text>Uno dei borghi più belli d'Italia</Comment.Text>
           <Comment.Actions>
-            <Comment.Action>Reply</Comment.Action>
+            <Comment.Action>Segnala</Comment.Action>
           </Comment.Actions>
         </Comment.Content>
       </Comment>
@@ -50,13 +50,13 @@ const DummyComments = () => (
     <Comment>
       <Comment.Avatar src={avatar} />
       <Comment.Content>
-        <Comment.Author as='a'>Joe Rogan</Comment.Author>
+        <Comment.Author as='a'>Domenichino Libbri</Comment.Author>
         <Comment.Metadata>
           <div>5 days ago</div>
         </Comment.Metadata>
         <Comment.Text>Camerieri simpatici e ottima varietá</Comment.Text>
         <Comment.Actions>
-          <Comment.Action>Reply</Comment.Action>
+          <Comment.Action>Segnala</Comment.Action>
         </Comment.Actions>
       </Comment.Content>
     </Comment>
